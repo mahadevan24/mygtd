@@ -1,0 +1,101 @@
+.item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 4px;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.item:hover {
+    background: var(--bg-hover);
+}
+
+.item:hover .deleteBtn {
+    opacity: 1;
+}
+
+/* Checkbox */
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--border-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+    background: transparent;
+}
+
+.checkbox:hover {
+    border-color: var(--accent-start);
+}
+
+.item.completed .checkbox {
+    background: var(--accent-gradient);
+    border-color: transparent;
+}
+
+.checkmark {
+    font-size: 11px;
+    color: white;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* Title */
+.title {
+    flex: 1;
+    font-size: 13px;
+    color: var(--text-primary);
+    cursor: default;
+    line-height: 1.4;
+}
+
+.item.completed .title {
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+}
+
+/* Edit input */
+.editInput {
+    flex: 1;
+    padding: 4px 8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--accent-start);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 13px;
+    outline: none;
+    box-shadow: 0 0 0 2px hsla(250, 80%, 60%, 0.15);
+}
+
+.deleteBtn {
+    opacity: 0;
+    font-size: 14px;
+    color: var(--text-tertiary);
+    padding: 4px;
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.deleteBtn:hover {
+    color: hsl(0, 80%, 65%);
+    background: hsla(0, 80%, 65%, 0.1);
+}

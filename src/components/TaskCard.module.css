@@ -1,0 +1,95 @@
+.card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    padding: 16px 18px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.card:hover {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-medium);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.card.selected {
+    border-color: var(--accent-start);
+    background: hsla(250, 80%, 60%, 0.06);
+    box-shadow: 0 0 0 1px hsla(250, 80%, 60%, 0.15);
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: 550;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.outcome {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.progressWrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.progressBar {
+    flex: 1;
+    height: 4px;
+    background: var(--bg-hover);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: 2px;
+    transition: width var(--transition-normal);
+}
+
+.progressText {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.chevron {
+    font-size: 16px;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    transition: color var(--transition-fast);
+}
+
+.card:hover .chevron {
+    color: var(--text-secondary);
+}
+
+.card.selected .chevron {
+    color: var(--accent-start);
+}

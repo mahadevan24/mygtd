@@ -1,0 +1,19 @@
+# GTD Application - Task Breakdown
+
+## Planning
+- [x] Design application architecture and data model
+- [x] Create implementation plan and get user approval
+
+## Execution
+- [/] Initialize Next.js project with TypeScript
+- [ ] Set up Supabase client, schema, and RLS policies
+- [ ] Build authentication (login, signup, logout)
+- [ ] Build GTD core UI — Inbox, Projects, Actions
+- [ ] Implement task CRUD with outcomes and next actions
+- [ ] Style with premium dark-mode aesthetic
+- [ ] Add animations and polish
+
+## Verification
+- [ ] Test auth flow in browser (signup, login, logout)
+- [ ] Test GTD workflow (create task → add outcome → add actions → complete)
+- [ ] Create walkthrough

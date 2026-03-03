@@ -1,0 +1,236 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* Animated background orbs */
+.bgOrbs {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.orb1,
+.orb2,
+.orb3 {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    animation: float 20s ease-in-out infinite;
+}
+
+.orb1 {
+    width: 400px;
+    height: 400px;
+    background: hsl(250, 80%, 50%);
+    top: -10%;
+    left: -5%;
+    animation-delay: 0s;
+}
+
+.orb2 {
+    width: 350px;
+    height: 350px;
+    background: hsl(200, 90%, 45%);
+    bottom: -10%;
+    right: -5%;
+    animation-delay: -7s;
+}
+
+.orb3 {
+    width: 250px;
+    height: 250px;
+    background: hsl(270, 70%, 50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -14s;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: translate(30px, -40px) scale(1.05);
+    }
+
+    50% {
+        transform: translate(-20px, 20px) scale(0.95);
+    }
+
+    75% {
+        transform: translate(15px, 30px) scale(1.02);
+    }
+}
+
+/* Card */
+.card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    padding: 48px 40px;
+    background: hsla(230, 17%, 14%, 0.8);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.logo h1 {
+    font-size: 28px;
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logoIcon {
+    font-size: 28px;
+    color: var(--accent-start);
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 32px;
+}
+
+/* Form */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+}
+
+.field input {
+    padding: 12px 16px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 14px;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.field input::placeholder {
+    color: var(--text-placeholder);
+}
+
+.field input:focus {
+    outline: none;
+    border-color: var(--accent-start);
+    box-shadow: 0 0 0 3px hsla(250, 80%, 60%, 0.15);
+}
+
+.error {
+    padding: 10px 14px;
+    background: hsla(0, 70%, 50%, 0.12);
+    border: 1px solid hsla(0, 70%, 50%, 0.25);
+    border-radius: var(--radius-sm);
+    color: hsl(0, 85%, 70%);
+    font-size: 13px;
+}
+
+.submitBtn {
+    padding: 14px;
+    background: var(--accent-gradient);
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.02em;
+    transition: opacity var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.submitBtn:hover:not(:disabled) {
+    opacity: 0.9;
+    box-shadow: var(--accent-glow);
+    transform: translateY(-1px);
+}
+
+.submitBtn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.submitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid hsla(0, 0%, 100%, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.switchText {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.switchText a {
+    color: var(--accent-text);
+    font-weight: 500;
+}

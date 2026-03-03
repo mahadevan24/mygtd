@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Default (Dark) Theme */
+  --bg-primary: hsl(230, 21%, 11%);
+  --bg-secondary: hsl(230, 17%, 14%);
+  --bg-tertiary: hsl(230, 15%, 18%);
+  --bg-hover: hsl(230, 15%, 22%);
+  --bg-active: hsl(230, 15%, 25%);
+
+  --text-primary: hsl(0, 0%, 95%);
+  --text-secondary: hsl(230, 10%, 65%);
+  --text-tertiary: hsl(230, 10%, 45%);
+  --text-placeholder: hsl(230, 10%, 35%);
+
+  --accent-start: hsl(250, 80%, 60%);
+  --accent-end: hsl(200, 90%, 55%);
+  --accent-gradient: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+  --accent-glow: 0 0 20px hsla(250, 80%, 60%, 0.3);
+  --accent-text: hsl(250, 80%, 70%);
+
+  --status-inbox: hsl(40, 90%, 60%);
+  --status-active: hsl(160, 70%, 50%);
+  --status-waiting: hsl(30, 85%, 55%);
+  --status-someday: hsl(270, 50%, 60%);
+  --status-done: hsl(230, 10%, 45%);
+
+  --border-subtle: hsla(230, 20%, 50%, 0.12);
+  --border-medium: hsla(230, 20%, 50%, 0.2);
+
+  --shadow-sm: 0 1px 3px hsla(0, 0%, 0%, 0.3);
+  --shadow-md: 0 4px 12px hsla(0, 0%, 0%, 0.4);
+  --shadow-lg: 0 8px 32px hsla(0, 0%, 0%, 0.5);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  color-scheme: dark;
+}
+
+[data-theme='light'],
+html[data-theme='light'],
+body[data-theme='light'] {
+  --bg-primary: hsl(0, 0%, 100%) !important;
+  --bg-secondary: hsl(210, 20%, 98%) !important;
+  --bg-tertiary: hsl(210, 20%, 95%) !important;
+  --bg-hover: hsl(210, 20%, 92%) !important;
+  --bg-active: hsl(210, 20%, 88%) !important;
+
+  --text-primary: hsl(230, 21%, 15%) !important;
+  --text-secondary: hsl(230, 10%, 35%) !important;
+  --text-tertiary: hsl(230, 12%, 50%) !important;
+  --text-placeholder: hsl(230, 10%, 65%) !important;
+
+  --accent-start: hsl(250, 80%, 55%);
+  --accent-end: hsl(200, 90%, 45%);
+  --accent-gradient: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+  --accent-glow: 0 0 15px hsla(250, 80%, 60%, 0.15);
+  --accent-text: hsl(250, 80%, 50%);
+
+  --border-subtle: hsla(230, 20%, 10%, 0.1) !important;
+  --border-medium: hsla(230, 20%, 10%, 0.2) !important;
+
+  --shadow-sm: 0 1px 3px hsla(0, 0%, 0%, 0.05);
+  --shadow-md: 0 4px 12px hsla(0, 0%, 0%, 0.08);
+  --shadow-lg: 0 8px 32px hsla(0, 0%, 0%, 0.12);
+
+  color-scheme: light;
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsla(230, 20%, 50%, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsla(230, 20%, 50%, 0.35);
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--accent-start);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: hsla(250, 80%, 60%, 0.3);
+  color: var(--text-primary);
+}
+
+/* Inputs */
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+a {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

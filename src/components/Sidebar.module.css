@@ -1,0 +1,150 @@
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 28px 24px 24px;
+}
+
+.brandIcon {
+    font-size: 24px;
+    color: var(--accent-start);
+}
+
+.brandName {
+    font-size: 20px;
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav {
+    flex: 1;
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.navLabel {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    padding: 8px 12px 6px;
+    margin-bottom: 4px;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 450;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.navItem:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.navItem.active {
+    background: hsla(250, 80%, 60%, 0.12);
+    color: var(--accent-text);
+}
+
+.navItem.active .navIcon {
+    color: var(--accent-start);
+}
+
+.navItem[data-status="inbox"].active {
+    background: hsla(40, 90%, 60%, 0.1);
+    color: var(--status-inbox);
+}
+
+.navItem[data-status="active"].active {
+    background: hsla(160, 70%, 50%, 0.1);
+    color: var(--status-active);
+}
+
+.navItem[data-status="waiting"].active {
+    background: hsla(30, 85%, 55%, 0.1);
+    color: var(--status-waiting);
+}
+
+.navItem[data-status="someday"].active {
+    background: hsla(270, 50%, 60%, 0.1);
+    color: var(--status-someday);
+}
+
+.navItem[data-status="done"].active {
+    background: hsla(230, 10%, 45%, 0.1);
+    color: var(--status-done);
+}
+
+.navIcon {
+    width: 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.navText {
+    flex: 1;
+    text-align: left;
+}
+
+.badge {
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    font-size: 11px;
+    font-weight: 600;
+    background-color: var(--bg-tertiary);
+    color: var(--text-tertiary);
+}
+
+.navItem.active .badge {
+    background-color: color-mix(in srgb, currentColor 15%, transparent);
+    color: inherit;
+}
+
+.sidebarFooter {
+    padding: 16px;
+    position: relative;
+}
+
+.footerGlow {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 120px;
+    background: radial-gradient(ellipse, hsla(250, 80%, 60%, 0.08), transparent 70%);
+    pointer-events: none;
+}

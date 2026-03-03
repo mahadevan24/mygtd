@@ -1,0 +1,168 @@
+# GTD Application — Next.js + Supabase
+
+A premium, dark-themed **Getting Things Done** app with Supabase auth and storage.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Supabase project required.** You will need a Supabase project with:
+> - A project URL and anon key (for `.env.local`)
+> - Email/password auth enabled (default)
+>
+> Please confirm you have a Supabase project ready, or I'll include instructions for creating one.
+
+> [!NOTE]
+> The app uses **App Router** (Next.js 14+), **CSS Modules** for scoped styling, and the **`@supabase/ssr`** package for auth. No Tailwind — pure CSS with custom properties for a premium dark-mode design.
+
+---
+
+## Data Model
+
+### Supabase Tables
+
+```sql
+-- Tasks (inbox items / projects)
+create table tasks (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id) on delete cascade not null,
+  title text not null,
+  outcome text,               -- desired outcome (GTD "what does done look like?")
+  status text not null default 'inbox',  -- inbox | active | waiting | someday | done
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Actions (next-action steps for a task)
+create table actions (
+  id uuid primary key default gen_random_uuid(),
+  task_id uuid references tasks(id) on delete cascade not null,
+  title text not null,
+  completed boolean default false,
+  sort_order int default 0,
+  created_at timestamptz default now()
+);
+
+-- Row Level Security
+alter table tasks enable row level security;
+alter table actions enable row level security;
+
+create policy "Users see own tasks" on tasks
+  for all using (auth.uid() = user_id);
+
+create policy "Users see own actions" on actions
+  for all using (
+    task_id in (select id from tasks where user_id = auth.uid())
+  );
+```
+
+---
+
+## Proposed Changes
+
+### 1. Project Scaffold
+
+#### [NEW] Next.js project via `create-next-app`
+
+- TypeScript, App Router, ESLint, no Tailwind, `src/` directory, import alias `@/*`
+- Command: `npx -y create-next-app@latest ./ --typescript --eslint --app --src-dir --import-alias "@/*" --no-tailwind --use-npm`
+
+#### [NEW] Dependencies
+
+- `@supabase/supabase-js` — Supabase client
+- `@supabase/ssr` — server-side auth helpers for Next.js
+- `react-icons` — icon library
+
+---
+
+### 2. Supabase Client
+
+#### [NEW] `src/lib/supabase/client.ts`
+Browser-side Supabase client using `createBrowserClient`.
+
+#### [NEW] `src/lib/supabase/server.ts`
+Server-side Supabase client using `createServerClient` with cookie helpers.
+
+#### [NEW] `src/lib/supabase/middleware.ts`
+Middleware helper to refresh auth tokens on every request.
+
+#### [NEW] `src/middleware.ts`
+Next.js middleware that calls the Supabase middleware helper.
+
+#### [NEW] `.env.local`
+Environment variables: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+
+---
+
+### 3. Authentication Pages
+
+#### [NEW] `src/app/login/page.tsx`
+Login form (email + password) with link to signup. Calls `supabase.auth.signInWithPassword`.
+
+#### [NEW] `src/app/signup/page.tsx`
+Signup form (email + password + confirm). Calls `supabase.auth.signUp`.
+
+#### [NEW] `src/app/auth/callback/route.ts`
+OAuth / magic-link callback handler (exchanges code for session).
+
+---
+
+### 4. Core GTD UI
+
+#### [NEW] `src/app/page.tsx`
+Main dashboard — redirects to `/login` if unauthenticated, otherwise renders the GTD board.
+
+#### [NEW] `src/app/layout.tsx`
+Root layout with dark theme, Google Fonts (Inter), and global CSS.
+
+#### [NEW] `src/components/Sidebar.tsx`
+Navigation sidebar with categories: **Inbox**, **Active**, **Waiting For**, **Someday/Maybe**, **Done**. Shows count badges.
+
+#### [NEW] `src/components/QuickCapture.tsx`
+Top input bar for rapidly adding items to inbox (press Enter to capture).
+
+#### [NEW] `src/components/TaskList.tsx`
+Renders filtered list of tasks for the selected category.
+
+#### [NEW] `src/components/TaskCard.tsx`
+Card with title, outcome preview, action progress bar, and status controls.
+
+#### [NEW] `src/components/TaskDetail.tsx`
+Slide-out panel for editing a task's outcome text and managing its action steps.
+
+#### [NEW] `src/components/ActionItem.tsx`
+Individual action step with checkbox toggle and inline edit.
+
+#### [NEW] `src/components/UserMenu.tsx`
+Dropdown showing user email + logout button.
+
+---
+
+### 5. Styling
+
+#### [NEW] `src/app/globals.css`
+Premium design system:
+- Dark background (`hsl(230, 21%, 11%)`) with card surfaces (`hsl(230, 17%, 14%)`)
+- Accent: vibrant purple-blue gradient (`hsl(250, 80%, 60%)` → `hsl(200, 90%, 55%)`)
+- Inter font, smooth transitions, glassmorphism cards
+- Responsive grid layout
+
+#### [NEW] CSS Modules for each component
+Scoped styling per-component for maintainability.
+
+---
+
+## Verification Plan
+
+### Browser Testing
+1. **Start dev server**: `npm run dev` from the project root
+2. **Signup flow**: Navigate to `/signup`, create a new account, verify redirect to dashboard
+3. **Login flow**: Log out, navigate to `/login`, sign in with the created account
+4. **Inbox capture**: Use the quick-capture bar to add 3 tasks
+5. **Process a task**: Click a task → add an outcome → add 3 action steps → check off steps → move task to "Active"
+6. **Filter views**: Click each sidebar category and verify correct filtering
+7. **Logout**: Click user menu → logout → verify redirect to login
+
+### Manual Verification (by you)
+- Confirm the dark-mode UI looks premium and polished
+- Confirm Supabase data persists across refreshes
+- Confirm RLS prevents cross-user data access (test in Supabase dashboard)
