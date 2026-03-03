@@ -25,6 +25,13 @@
   --status-someday: hsl(270, 50%, 60%);
   --status-done: hsl(230, 10%, 45%);
 
+  --priority-p1: hsl(0, 100%, 65%);
+  --priority-p2: hsl(40, 100%, 60%);
+  --priority-p3: hsl(200, 100%, 60%);
+
+  --btn-text-on-accent: hsl(0, 0%, 100%);
+  --card-glass: hsla(230, 17%, 14%, 0.8);
+
   --border-subtle: hsla(230, 20%, 50%, 0.12);
   --border-medium: hsla(230, 20%, 50%, 0.2);
 
@@ -69,6 +76,13 @@
   --shadow-md: 0 4px 12px hsla(0, 0%, 0%, 0.08);
   --shadow-lg: 0 8px 32px hsla(0, 0%, 0%, 0.12);
 
+  --priority-p1: hsl(0, 80%, 50%);
+  --priority-p2: hsl(35, 90%, 45%);
+  --priority-p3: hsl(200, 80%, 45%);
+
+  --btn-text-on-accent: hsl(0, 0%, 100%);
+  --card-glass: hsla(0, 0%, 100%, 0.8);
+
   color-scheme: light;
 }
 
@@ -87,7 +101,7 @@ body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Scrollbar */

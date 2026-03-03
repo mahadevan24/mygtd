@@ -24,7 +24,7 @@
     align-items: center;
     justify-content: center;
     font-size: 16px;
-    color: white;
+    color: var(--btn-text-on-accent);
 }
 
 

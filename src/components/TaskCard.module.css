@@ -1,3 +1,8 @@
+.cardWrap {
+    margin-bottom: 8px;
+    touch-action: none;
+}
+
 .card {
     display: flex;
     align-items: center;
@@ -10,6 +15,32 @@
     border-radius: var(--radius-md);
     transition: all var(--transition-fast);
     cursor: pointer;
+    position: relative;
+    padding-left: 42px;
+}
+
+.dragHandle {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    cursor: grab;
+    padding: 6px;
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+}
+
+.dragHandle:hover {
+    color: var(--text-secondary);
+    background: var(--bg-hover);
+}
+
+.dragHandle:active {
+    cursor: grabbing;
 }
 
 .card:hover {
@@ -30,11 +61,45 @@
     min-width: 0;
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.priorityBadge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+}
+
+.card[data-priority="p1"] .priorityBadge {
+    background: hsla(0, 100%, 50%, 0.1);
+    color: var(--priority-p1);
+    border-color: hsla(0, 100%, 50%, 0.2);
+}
+
+.card[data-priority="p2"] .priorityBadge {
+    background: hsla(40, 100%, 50%, 0.1);
+    color: var(--priority-p2);
+    border-color: hsla(40, 100%, 50%, 0.2);
+}
+
+.card[data-priority="p3"] .priorityBadge {
+    background: hsla(200, 100%, 50%, 0.1);
+    color: var(--priority-p3);
+    border-color: hsla(200, 100%, 50%, 0.2);
+}
+
 .title {
     font-size: 14px;
     font-weight: 550;
     color: var(--text-primary);
-    margin-bottom: 4px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -53,7 +53,7 @@
     align-items: center;
     gap: 8px;
     background: var(--accent-gradient);
-    color: white;
+    color: var(--btn-text-on-accent);
     padding: 0 20px;
     border-radius: var(--radius-md);
     font-weight: 600;
@@ -71,12 +71,36 @@
     gap: 20px;
 }
 
+.cardWrap {
+    touch-action: none;
+}
+
 .card {
     background: var(--bg-secondary);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
     padding: 20px;
+    padding-left: 48px;
     transition: transform var(--transition-fast), border-color var(--transition-fast);
+    position: relative;
+}
+
+.dragHandle {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    cursor: grab;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius-sm);
+}
+
+.dragHandle:hover {
+    color: var(--text-secondary);
+    background: var(--bg-hover);
 }
 
 .card:hover {
@@ -110,7 +134,7 @@
 }
 
 .deleteBtn:hover {
-    color: #ff4d4d;
+    color: var(--priority-p1);
     background: hsla(0, 100%, 50%, 0.1);
 }
 

@@ -59,6 +59,7 @@ export default function Home() {
       .from('tasks')
       .select('*')
       .eq('user_id', user.id)
+      .order('sort_order', { ascending: true })
       .order('created_at', { ascending: false })
 
     if (data) setTasks(data as Task[])
@@ -124,10 +125,28 @@ export default function Home() {
   }
 
   // Task delete
+  // Task delete
   const handleTaskDelete = (taskId: string) => {
     setTasks((prev) => prev.filter((t) => t.id !== taskId))
     setActions((prev) => prev.filter((a) => a.task_id !== taskId))
     setSelectedTask(null)
+  }
+
+  // Task reorder
+  const handleReorder = async (taskIds: string[]) => {
+    // Update local state immediately
+    const tasksMap = new Map(tasks.map((t) => [t.id, t]))
+    const reorderedTasks = taskIds.map((id, index) => {
+      const task = tasksMap.get(id)!
+      return { ...task, sort_order: index }
+    })
+    setTasks(reorderedTasks)
+
+    // Save to DB
+    const updates = taskIds.map((id, index) =>
+      supabase.from('tasks').update({ sort_order: index }).eq('id', id)
+    )
+    await Promise.all(updates)
   }
 
   if (!mounted || loading) {
@@ -183,6 +202,7 @@ export default function Home() {
                 actionsMap={actionsMap}
                 selectedTaskId={selectedTask?.id || null}
                 onSelectTask={(task) => setSelectedTask(task)}
+                onReorder={handleReorder}
               />
             </div>
           </>

@@ -43,7 +43,7 @@
     font-weight: 600;
     border-radius: var(--radius-sm);
     background: var(--accent-gradient);
-    color: white;
+    color: var(--btn-text-on-accent);
     transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 

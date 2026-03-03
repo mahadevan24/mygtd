@@ -81,7 +81,7 @@
     width: 100%;
     max-width: 420px;
     padding: 48px 40px;
-    background: hsla(230, 17%, 14%, 0.8);
+    background: var(--card-glass);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--border-subtle);
@@ -185,7 +185,7 @@
     border-radius: var(--radius-md);
     font-size: 15px;
     font-weight: 600;
-    color: white;
+    color: var(--btn-text-on-accent);
     letter-spacing: 0.02em;
     transition: opacity var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
     position: relative;

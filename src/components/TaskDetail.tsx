@@ -12,8 +12,9 @@ import {
     HiOutlineLightBulb,
     HiOutlineBriefcase,
     HiOutlineFlag,
+    HiOutlineExclamationCircle,
 } from 'react-icons/hi2'
-import { Area, Goal } from '@/lib/types'
+import { Area, Goal, Priority } from '@/lib/types'
 
 interface TaskDetailProps {
     task: Task
@@ -30,6 +31,13 @@ const statusOptions: { key: TStatus; label: string; color: string }[] = [
     { key: 'waiting', label: 'Waiting For', color: 'var(--status-waiting)' },
     { key: 'someday', label: 'Someday', color: 'var(--status-someday)' },
     { key: 'done', label: 'Done', color: 'var(--status-done)' },
+]
+
+const priorityOptions: { key: Priority; label: string; color: string }[] = [
+    { key: 'p1', label: 'P1', color: '#ff4d4d' },
+    { key: 'p2', label: 'P2', color: '#ffa500' },
+    { key: 'p3', label: 'P3', color: '#4dabf7' },
+    { key: 'p3', label: 'None', color: 'var(--text-tertiary)' }, // actually null
 ]
 
 export default function TaskDetail({
@@ -180,6 +188,25 @@ export default function TaskDetail({
                                 onClick={() => handleStatusChange(s.key)}
                             >
                                 {s.label}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Priority */}
+                <div className={styles.section}>
+                    <label className={styles.label}>
+                        <HiOutlineExclamationCircle className={styles.labelIcon} /> Priority
+                    </label>
+                    <div className={styles.priorityRow}>
+                        {(['p1', 'p2', 'p3', null] as Priority[]).map((p) => (
+                            <button
+                                key={p || 'none'}
+                                className={`${styles.priorityChip} ${task.priority === p ? styles.priorityActive : ''}`}
+                                data-priority={p}
+                                onClick={() => updateTask({ priority: p })}
+                            >
+                                {p ? p.toUpperCase() : 'None'}
                             </button>
                         ))}
                     </div>

@@ -53,7 +53,7 @@
 
 .checkmark {
     font-size: 11px;
-    color: white;
+    color: var(--btn-text-on-accent);
     font-weight: 700;
     line-height: 1;
 }

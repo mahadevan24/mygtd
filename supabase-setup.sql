@@ -10,6 +10,7 @@ create table if not exists public.areas (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references auth.users(id) on delete cascade not null,
   title text not null,
+  sort_order int default 0,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -22,6 +23,8 @@ create table if not exists public.goals (
   title text not null,
   description text,
   status text not null default 'active',
+  priority text check (priority in ('p1', 'p2', 'p3')),
+  sort_order int default 0,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -35,6 +38,8 @@ create table if not exists public.tasks (
   title text not null,
   outcome text,
   status text not null default 'inbox',
+  priority text check (priority in ('p1', 'p2', 'p3')),
+  sort_order int default 0,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
