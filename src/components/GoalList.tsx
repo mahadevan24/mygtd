@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Goal, Area } from '@/lib/types'
+import { Goal, Area, Priority } from '@/lib/types'
 import { HiOutlinePlus } from 'react-icons/hi2'
 import styles from './GoalList.module.css'
 import {
@@ -28,7 +28,18 @@ export default function GoalList() {
     const [areas, setAreas] = useState<Area[]>([])
     const [title, setTitle] = useState('')
     const [selectedAreaId, setSelectedAreaId] = useState<string>('')
+    const [priority, setPriority] = useState<Priority>(null)
     const [loading, setLoading] = useState(true)
+
+    const sortGoals = (goals: Goal[]) => {
+        const priorityMap = { p1: 1, p2: 2, p3: 3, null: 4 }
+        return [...goals].sort((a, b) => {
+            const pA = priorityMap[a.priority as keyof typeof priorityMap || 'null']
+            const pB = priorityMap[b.priority as keyof typeof priorityMap || 'null']
+            if (pA !== pB) return pA - pB
+            return a.sort_order - b.sort_order
+        })
+    }
 
     useEffect(() => {
         loadData()
@@ -43,7 +54,7 @@ export default function GoalList() {
             supabase.from('areas').select('*').eq('user_id', user.id).order('sort_order', { ascending: true }).order('title', { ascending: true })
         ])
 
-        if (goalsRes.data) setGoals(goalsRes.data)
+        if (goalsRes.data) setGoals(sortGoals(goalsRes.data as Goal[]))
         if (areasRes.data) setAreas(areasRes.data)
         setLoading(false)
     }
@@ -67,7 +78,7 @@ export default function GoalList() {
                 ...goal,
                 sort_order: index
             }))
-            setGoals(updatedGoals)
+            setGoals(sortGoals(updatedGoals))
 
             // Persist to DB
             const updates = updatedGoals.map((goal, index) =>
@@ -90,15 +101,17 @@ export default function GoalList() {
                 title: title.trim(),
                 user_id: user.id,
                 area_id: selectedAreaId || null,
+                priority,
                 sort_order: goals.length
             })
             .select()
             .single()
 
         if (!error && data) {
-            setGoals([data, ...goals])
+            setGoals(sortGoals([data, ...goals]))
             setTitle('')
             setSelectedAreaId('')
+            setPriority(null)
         }
     }
 
@@ -137,6 +150,16 @@ export default function GoalList() {
                         {areas.map(a => (
                             <option key={a.id} value={a.id}>{a.title}</option>
                         ))}
+                    </select>
+                    <select
+                        className={styles.select}
+                        value={priority || ''}
+                        onChange={(e) => setPriority(e.target.value as Priority || null)}
+                    >
+                        <option value="">No Priority</option>
+                        <option value="p1">P1 (High)</option>
+                        <option value="p2">P2 (Medium)</option>
+                        <option value="p3">P3 (Low)</option>
                     </select>
                 </div>
                 <button type="submit" className={styles.addBtn} disabled={!title.trim()}>

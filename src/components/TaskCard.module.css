@@ -6,7 +6,7 @@
 .card {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     width: 100%;
     text-align: left;
     padding: 16px 18px;
@@ -16,20 +16,16 @@
     transition: all var(--transition-fast);
     cursor: pointer;
     position: relative;
-    padding-left: 42px;
 }
 
 .dragHandle {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-tertiary);
     cursor: grab;
     padding: 6px;
+    margin-left: -4px;
     border-radius: 4px;
     transition: all var(--transition-fast);
 }

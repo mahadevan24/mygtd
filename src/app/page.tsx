@@ -52,6 +52,17 @@ export default function Home() {
     checkUser()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Sort priority helper
+  const sortTasks = (tasks: Task[]) => {
+    const priorityMap = { p1: 1, p2: 2, p3: 3, null: 4 }
+    return [...tasks].sort((a, b) => {
+      const pA = priorityMap[a.priority as keyof typeof priorityMap || 'null']
+      const pB = priorityMap[b.priority as keyof typeof priorityMap || 'null']
+      if (pA !== pB) return pA - pB
+      return a.sort_order - b.sort_order
+    })
+  }
+
   // Load tasks
   const loadTasks = useCallback(async () => {
     if (!user) return
@@ -60,9 +71,10 @@ export default function Home() {
       .select('*')
       .eq('user_id', user.id)
       .order('sort_order', { ascending: true })
+      .order('priority', { ascending: true, nullsFirst: false })
       .order('created_at', { ascending: false })
 
-    if (data) setTasks(data as Task[])
+    if (data) setTasks(sortTasks(data as Task[]))
   }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Load actions
@@ -92,7 +104,7 @@ export default function Home() {
   })
 
   // Filtered tasks
-  const filteredTasks = tasks.filter((t) => t.status === activeFilter)
+  const filteredTasks = sortTasks(tasks.filter((t) => t.status === activeFilter))
 
   // Counts
   const counts: Record<TStatus, number> = {
@@ -113,14 +125,14 @@ export default function Home() {
       .single()
 
     if (data) {
-      setTasks((prev) => [data as Task, ...prev])
+      setTasks((prev) => sortTasks([data as Task, ...prev]))
       setActiveFilter('inbox')
     }
   }
 
   // Task update
   const handleTaskUpdate = (updated: Task) => {
-    setTasks((prev) => prev.map((t) => (t.id === updated.id ? updated : t)))
+    setTasks((prev) => sortTasks(prev.map((t) => (t.id === updated.id ? updated : t))))
     setSelectedTask(updated)
   }
 
@@ -140,7 +152,7 @@ export default function Home() {
       const task = tasksMap.get(id)!
       return { ...task, sort_order: index }
     })
-    setTasks(reorderedTasks)
+    setTasks(sortTasks(reorderedTasks))
 
     // Save to DB
     const updates = taskIds.map((id, index) =>

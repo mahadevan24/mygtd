@@ -37,23 +37,21 @@ export function SortableGoal({ goal, areas, onDelete }: SortableGoalProps) {
                 <div className={styles.dragHandle} {...attributes} {...listeners}>
                     <HiOutlineBars3 />
                 </div>
-                <div className={styles.cardContent}>
-                    <HiOutlineFlag className={styles.goalIcon} />
-                    <div className={styles.goalInfo}>
-                        <div className={styles.goalHeader}>
-                            {goal.priority && (
-                                <span className={styles.priorityBadge}>{goal.priority.toUpperCase()}</span>
-                            )}
-                            <h3 className={styles.goalTitle}>{goal.title}</h3>
-                        </div>
-                        {areaName && (
-                            <span className={styles.areaTag}>{areaName}</span>
+                <HiOutlineFlag className={styles.goalIcon} />
+                <div className={styles.goalInfo}>
+                    <div className={styles.goalHeader}>
+                        {goal.priority && (
+                            <span className={styles.priorityBadge}>{goal.priority.toUpperCase()}</span>
                         )}
+                        <h3 className={styles.goalTitle}>{goal.title}</h3>
                     </div>
-                    <button className={styles.deleteBtn} onClick={() => onDelete(goal.id)}>
-                        <HiOutlineTrash />
-                    </button>
+                    {areaName && (
+                        <span className={styles.areaTag}>{areaName}</span>
+                    )}
                 </div>
+                <button className={styles.deleteBtn} onClick={() => onDelete(goal.id)}>
+                    <HiOutlineTrash />
+                </button>
             </div>
         </div>
     )
