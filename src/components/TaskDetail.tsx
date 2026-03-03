@@ -10,7 +10,10 @@ import {
     HiOutlinePlus,
     HiOutlineTrash,
     HiOutlineLightBulb,
+    HiOutlineBriefcase,
+    HiOutlineFlag,
 } from 'react-icons/hi2'
+import { Area, Goal } from '@/lib/types'
 
 interface TaskDetailProps {
     task: Task
@@ -40,9 +43,28 @@ export default function TaskDetail({
     const supabase = createClient()
     const [title, setTitle] = useState(task.title)
     const [outcome, setOutcome] = useState(task.outcome || '')
+    const [areas, setAreas] = useState<Area[]>([])
+    const [goals, setGoals] = useState<Goal[]>([])
     const [newAction, setNewAction] = useState('')
     const titleTimeout = useRef<NodeJS.Timeout | null>(null)
     const outcomeTimeout = useRef<NodeJS.Timeout | null>(null)
+
+    useEffect(() => {
+        loadMetadata()
+    }, [])
+
+    const loadMetadata = async () => {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return
+
+        const [areasRes, goalsRes] = await Promise.all([
+            supabase.from('areas').select('*').eq('user_id', user.id).order('title', { ascending: true }),
+            supabase.from('goals').select('*').eq('user_id', user.id).order('title', { ascending: true })
+        ])
+
+        if (areasRes.data) setAreas(areasRes.data)
+        if (goalsRes.data) setGoals(goalsRes.data)
+    }
 
     useEffect(() => {
         setTitle(task.title)
@@ -160,6 +182,41 @@ export default function TaskDetail({
                                 {s.label}
                             </button>
                         ))}
+                    </div>
+                </div>
+
+                {/* Area & Goal Selectors */}
+                <div className={styles.metaGrid}>
+                    <div className={styles.section}>
+                        <label className={styles.label}>
+                            <HiOutlineBriefcase className={styles.labelIcon} /> Area of Focus
+                        </label>
+                        <select
+                            className={styles.select}
+                            value={task.area_id || ''}
+                            onChange={(e) => updateTask({ area_id: e.target.value || null })}
+                        >
+                            <option value="">None</option>
+                            {areas.map(a => (
+                                <option key={a.id} value={a.id}>{a.title}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className={styles.section}>
+                        <label className={styles.label}>
+                            <HiOutlineFlag className={styles.labelIcon} /> Goal
+                        </label>
+                        <select
+                            className={styles.select}
+                            value={task.goal_id || ''}
+                            onChange={(e) => updateTask({ goal_id: e.target.value || null })}
+                        >
+                            <option value="">None</option>
+                            {goals.map(g => (
+                                <option key={g.id} value={g.id}>{g.title}</option>
+                            ))}
+                        </select>
                     </div>
                 </div>
 

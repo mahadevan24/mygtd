@@ -11,12 +11,11 @@ export default function ThemeToggle() {
     useEffect(() => {
         setMounted(true)
         const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
-        const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
-        const initialTheme = savedTheme || systemTheme
-
-        setTheme(initialTheme)
-        document.documentElement.setAttribute('data-theme', initialTheme)
-        document.body.setAttribute('data-theme', initialTheme)
+        if (savedTheme) {
+            setTheme(savedTheme)
+        } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+            setTheme('light')
+        }
     }, [])
 
     const toggleTheme = () => {
@@ -24,7 +23,6 @@ export default function ThemeToggle() {
         setTheme(newTheme)
         localStorage.setItem('theme', newTheme)
         document.documentElement.setAttribute('data-theme', newTheme)
-        document.body.setAttribute('data-theme', newTheme)
     }
 
     if (!mounted) return null

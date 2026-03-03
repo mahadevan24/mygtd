@@ -76,7 +76,30 @@
 
 .labelIcon {
     font-size: 14px;
-    color: var(--status-inbox);
+    color: var(--accent-start);
+}
+
+.metaGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.select {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 13px;
+    outline: none;
+    transition: all var(--transition-fast);
+}
+
+.select:focus {
+    border-color: var(--accent-start);
+    box-shadow: 0 0 0 3px hsla(250, 80%, 60%, 0.1);
 }
 
 /* Title input */

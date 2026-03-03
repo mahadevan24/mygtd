@@ -44,19 +44,17 @@
   color-scheme: dark;
 }
 
-[data-theme='light'],
-html[data-theme='light'],
-body[data-theme='light'] {
-  --bg-primary: hsl(0, 0%, 100%) !important;
-  --bg-secondary: hsl(210, 20%, 98%) !important;
-  --bg-tertiary: hsl(210, 20%, 95%) !important;
-  --bg-hover: hsl(210, 20%, 92%) !important;
-  --bg-active: hsl(210, 20%, 88%) !important;
+[data-theme='light'] {
+  --bg-primary: hsl(0, 0%, 100%);
+  --bg-secondary: hsl(210, 20%, 98%);
+  --bg-tertiary: hsl(210, 20%, 95%);
+  --bg-hover: hsl(210, 20%, 92%);
+  --bg-active: hsl(210, 20%, 88%);
 
-  --text-primary: hsl(230, 21%, 15%) !important;
-  --text-secondary: hsl(230, 10%, 35%) !important;
-  --text-tertiary: hsl(230, 12%, 50%) !important;
-  --text-placeholder: hsl(230, 10%, 65%) !important;
+  --text-primary: hsl(230, 21%, 15%);
+  --text-secondary: hsl(230, 10%, 35%);
+  --text-tertiary: hsl(230, 12%, 50%);
+  --text-placeholder: hsl(230, 10%, 65%);
 
   --accent-start: hsl(250, 80%, 55%);
   --accent-end: hsl(200, 90%, 45%);
@@ -64,8 +62,8 @@ body[data-theme='light'] {
   --accent-glow: 0 0 15px hsla(250, 80%, 60%, 0.15);
   --accent-text: hsl(250, 80%, 50%);
 
-  --border-subtle: hsla(230, 20%, 10%, 0.1) !important;
-  --border-medium: hsla(230, 20%, 10%, 0.2) !important;
+  --border-subtle: hsla(230, 20%, 10%, 0.08);
+  --border-medium: hsla(230, 20%, 10%, 0.15);
 
   --shadow-sm: 0 1px 3px hsla(0, 0%, 0%, 0.05);
   --shadow-md: 0 4px 12px hsla(0, 0%, 0%, 0.08);

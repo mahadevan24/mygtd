@@ -24,7 +24,6 @@ export default function RootLayout({
                   var savedTheme = localStorage.getItem('theme');
                   var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                   document.documentElement.setAttribute('data-theme', theme);
-                  document.body.setAttribute('data-theme', theme);
                 } catch (e) {}
               })();
             `,

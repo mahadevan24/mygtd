@@ -8,6 +8,8 @@ import Sidebar from '@/components/Sidebar'
 import QuickCapture from '@/components/QuickCapture'
 import TaskList from '@/components/TaskList'
 import TaskDetail from '@/components/TaskDetail'
+import GoalList from '@/components/GoalList'
+import AreaList from '@/components/AreaList'
 import UserMenu from '@/components/UserMenu'
 import ThemeToggle from '@/components/ThemeToggle'
 import styles from './page.module.css'
@@ -29,7 +31,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [tasks, setTasks] = useState<Task[]>([])
   const [actions, setActions] = useState<Action[]>([])
-  const [activeFilter, setActiveFilter] = useState<TStatus>('inbox')
+  const [activeFilter, setActiveFilter] = useState<TStatus | 'goals' | 'areas'>('inbox')
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
 
   useEffect(() => {
@@ -150,10 +152,14 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.topBar}>
           <div>
-            <h1 className={styles.pageTitle}>{filterLabels[activeFilter]}</h1>
-            <p className={styles.pageCount}>
-              {filteredTasks.length} {filteredTasks.length === 1 ? 'item' : 'items'}
-            </p>
+            <h1 className={styles.pageTitle}>
+              {activeFilter === 'goals' ? 'Goals' : activeFilter === 'areas' ? 'Areas' : filterLabels[activeFilter as TStatus]}
+            </h1>
+            {activeFilter !== 'goals' && activeFilter !== 'areas' && (
+              <p className={styles.pageCount}>
+                {filteredTasks.length} {filteredTasks.length === 1 ? 'item' : 'items'}
+              </p>
+            )}
           </div>
           <div className={styles.topActions}>
             <ThemeToggle />
@@ -161,18 +167,26 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={styles.captureWrap}>
-          <QuickCapture onCapture={handleCapture} />
-        </div>
+        {activeFilter === 'goals' ? (
+          <GoalList />
+        ) : activeFilter === 'areas' ? (
+          <AreaList />
+        ) : (
+          <>
+            <div className={styles.captureWrap}>
+              <QuickCapture onCapture={handleCapture} />
+            </div>
 
-        <div className={styles.content}>
-          <TaskList
-            tasks={filteredTasks}
-            actionsMap={actionsMap}
-            selectedTaskId={selectedTask?.id || null}
-            onSelectTask={(task) => setSelectedTask(task)}
-          />
-        </div>
+            <div className={styles.content}>
+              <TaskList
+                tasks={filteredTasks}
+                actionsMap={actionsMap}
+                selectedTaskId={selectedTask?.id || null}
+                onSelectTask={(task) => setSelectedTask(task)}
+              />
+            </div>
+          </>
+        )}
       </main>
 
       {selectedTask && (

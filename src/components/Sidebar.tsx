@@ -9,11 +9,12 @@ import {
     HiOutlineClock,
     HiOutlineCloud,
     HiOutlineCheckCircle,
+    HiOutlineBriefcase,
 } from 'react-icons/hi2'
 
 interface SidebarProps {
-    activeFilter: TaskStatus
-    onFilterChange: (filter: TaskStatus) => void
+    activeFilter: TaskStatus | 'goals' | 'areas'
+    onFilterChange: (filter: TaskStatus | 'goals' | 'areas') => void
     counts: Record<TaskStatus, number>
 }
 
@@ -49,6 +50,22 @@ export default function Sidebar({ activeFilter, onFilterChange, counts }: Sideba
                         )}
                     </button>
                 ))}
+
+                <span className={styles.navLabel} style={{ marginTop: '20px' }}>Vertical View</span>
+                <button
+                    className={`${styles.navItem} ${activeFilter === 'goals' ? styles.active : ''}`}
+                    onClick={() => onFilterChange('goals')}
+                >
+                    <span className={styles.navIcon}><HiOutlineCloud /></span>
+                    <span className={styles.navText}>Goals</span>
+                </button>
+                <button
+                    className={`${styles.navItem} ${activeFilter === 'areas' ? styles.active : ''}`}
+                    onClick={() => onFilterChange('areas')}
+                >
+                    <span className={styles.navIcon}><HiOutlineBriefcase /></span>
+                    <span className={styles.navText}>Areas of Focus</span>
+                </button>
             </nav>
 
             <div className={styles.sidebarFooter}>
