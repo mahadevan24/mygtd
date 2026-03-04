@@ -10,6 +10,7 @@ import TaskList from '@/components/TaskList'
 import TaskDetail from '@/components/TaskDetail'
 import GoalList from '@/components/GoalList'
 import AreaList from '@/components/AreaList'
+import GraphView from '@/components/GraphView'
 import UserMenu from '@/components/UserMenu'
 import ThemeToggle from '@/components/ThemeToggle'
 import styles from './page.module.css'
@@ -31,7 +32,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [tasks, setTasks] = useState<Task[]>([])
   const [actions, setActions] = useState<Action[]>([])
-  const [activeFilter, setActiveFilter] = useState<TStatus | 'goals' | 'areas'>('inbox')
+  const [activeFilter, setActiveFilter] = useState<TStatus | 'goals' | 'areas' | 'graph'>('inbox')
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
 
   useEffect(() => {
@@ -184,9 +185,9 @@ export default function Home() {
         <div className={styles.topBar}>
           <div>
             <h1 className={styles.pageTitle}>
-              {activeFilter === 'goals' ? 'Goals' : activeFilter === 'areas' ? 'Areas' : filterLabels[activeFilter as TStatus]}
+              {activeFilter === 'goals' ? 'Goals' : activeFilter === 'areas' ? 'Areas' : activeFilter === 'graph' ? 'Graph View' : filterLabels[activeFilter as TStatus]}
             </h1>
-            {activeFilter !== 'goals' && activeFilter !== 'areas' && (
+            {activeFilter !== 'goals' && activeFilter !== 'areas' && activeFilter !== 'graph' && (
               <p className={styles.pageCount}>
                 {filteredTasks.length} {filteredTasks.length === 1 ? 'item' : 'items'}
               </p>
@@ -202,6 +203,11 @@ export default function Home() {
           <GoalList />
         ) : activeFilter === 'areas' ? (
           <AreaList />
+        ) : activeFilter === 'graph' ? (
+          <GraphView onSelectNode={(id: string) => {
+            const task = tasks.find(t => t.id === id);
+            if (task) setSelectedTask(task);
+          }} />
         ) : (
           <>
             <div className={styles.captureWrap}>

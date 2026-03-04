@@ -10,11 +10,12 @@ import {
     HiOutlineCloud,
     HiOutlineCheckCircle,
     HiOutlineBriefcase,
+    HiOutlineShare,
 } from 'react-icons/hi2'
 
 interface SidebarProps {
-    activeFilter: TaskStatus | 'goals' | 'areas'
-    onFilterChange: (filter: TaskStatus | 'goals' | 'areas') => void
+    activeFilter: TaskStatus | 'goals' | 'areas' | 'graph'
+    onFilterChange: (filter: TaskStatus | 'goals' | 'areas' | 'graph') => void
     counts: Record<TaskStatus, number>
 }
 
@@ -65,6 +66,13 @@ export default function Sidebar({ activeFilter, onFilterChange, counts }: Sideba
                 >
                     <span className={styles.navIcon}><HiOutlineBriefcase /></span>
                     <span className={styles.navText}>Areas of Focus</span>
+                </button>
+                <button
+                    className={`${styles.navItem} ${activeFilter === 'graph' ? styles.active : ''}`}
+                    onClick={() => onFilterChange('graph')}
+                >
+                    <span className={styles.navIcon}><HiOutlineShare /></span>
+                    <span className={styles.navText}>Graph View</span>
                 </button>
             </nav>
 
