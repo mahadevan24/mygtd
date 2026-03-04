@@ -1,11 +1,23 @@
 .panel {
-    width: 420px;
-    min-height: 100vh;
-    background: var(--bg-secondary);
+    width: 480px;
+    height: 100vh;
+    background-color: var(--bg-secondary);
     border-left: 1px solid var(--border-subtle);
     display: flex;
     flex-direction: column;
+    box-shadow: var(--shadow-lg);
+    z-index: 50;
+    position: fixed;
+    right: 0;
+    top: 0;
     animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+    .panel {
+        width: 100%;
+        border-left: none;
+    }
 }
 
 @keyframes slideIn {
@@ -85,6 +97,12 @@
     gap: 16px;
 }
 
+@media (max-width: 480px) {
+    .metaGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .select {
     width: 100%;
     padding: 10px 12px;
@@ -118,6 +136,12 @@
 
 .titleInput:focus {
     border-bottom-color: var(--accent-start);
+}
+
+@media (max-width: 480px) {
+    .titleInput {
+        font-size: 16px;
+    }
 }
 
 .titleInput::placeholder {

@@ -9,6 +9,12 @@
     box-shadow: none;
 }
 
+@media (max-width: 768px) {
+    .graphContainer {
+        height: calc(100vh - 140px);
+    }
+}
+
 .loading {
     display: flex;
     align-items: center;

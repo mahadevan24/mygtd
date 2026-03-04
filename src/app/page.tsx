@@ -13,6 +13,7 @@ import AreaList from '@/components/AreaList'
 import GraphView from '@/components/GraphView'
 import UserMenu from '@/components/UserMenu'
 import ThemeToggle from '@/components/ThemeToggle'
+import { HiOutlineBars3 } from 'react-icons/hi2'
 import styles from './page.module.css'
 
 const filterLabels: Record<TStatus, string> = {
@@ -34,6 +35,7 @@ export default function Home() {
   const [actions, setActions] = useState<Action[]>([])
   const [activeFilter, setActiveFilter] = useState<TStatus | 'goals' | 'areas' | 'graph'>('inbox')
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -177,21 +179,32 @@ export default function Home() {
         onFilterChange={(f) => {
           setActiveFilter(f)
           setSelectedTask(null)
+          setIsSidebarOpen(false)
         }}
         counts={counts}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
 
       <main className={styles.main}>
         <div className={styles.topBar}>
-          <div>
-            <h1 className={styles.pageTitle}>
-              {activeFilter === 'goals' ? 'Goals' : activeFilter === 'areas' ? 'Areas' : activeFilter === 'graph' ? 'Graph View' : filterLabels[activeFilter as TStatus]}
-            </h1>
-            {activeFilter !== 'goals' && activeFilter !== 'areas' && activeFilter !== 'graph' && (
-              <p className={styles.pageCount}>
-                {filteredTasks.length} {filteredTasks.length === 1 ? 'item' : 'items'}
-              </p>
-            )}
+          <div className={styles.titleSection}>
+            <button
+              className={styles.menuBtn}
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              <HiOutlineBars3 />
+            </button>
+            <div>
+              <h1 className={styles.pageTitle}>
+                {activeFilter === 'goals' ? 'Goals' : activeFilter === 'areas' ? 'Areas' : activeFilter === 'graph' ? 'Graph View' : filterLabels[activeFilter as TStatus]}
+              </h1>
+              {activeFilter !== 'goals' && activeFilter !== 'areas' && activeFilter !== 'graph' && (
+                <p className={styles.pageCount}>
+                  {filteredTasks.length} {filteredTasks.length === 1 ? 'item' : 'items'}
+                </p>
+              )}
+            </div>
           </div>
           <div className={styles.topActions}>
             <ThemeToggle />

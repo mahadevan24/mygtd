@@ -9,6 +9,21 @@
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
+@media (max-width: 768px) {
+    .capture {
+        padding: 10px 14px;
+        gap: 8px;
+    }
+
+    .input {
+        font-size: 14px;
+    }
+
+    .btn {
+        padding: 6px 12px;
+    }
+}
+
 .capture:focus-within {
     border-color: var(--accent-start);
     box-shadow: 0 0 0 3px hsla(250, 80%, 60%, 0.1);
@@ -26,6 +41,7 @@
 
 .input {
     flex: 1;
+    min-width: 0;
     border: none;
     background: transparent;
     color: var(--text-primary);

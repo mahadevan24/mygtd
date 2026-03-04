@@ -12,8 +12,60 @@
 .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: space-between;
     padding: 28px 24px 24px;
+}
+
+.brandMain {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobileClose {
+    display: none;
+    font-size: 24px;
+    color: var(--text-secondary);
+    padding: 4px;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        height: 100vh;
+        transform: translateX(-100%);
+        transition: transform var(--transition-normal);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .sidebarOpen {
+        transform: translateX(0);
+    }
+
+    .mobileClose {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        z-index: 90;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-normal);
+    }
+
+    .overlayVisible {
+        opacity: 1;
+        pointer-events: auto;
+    }
 }
 
 .brandIcon {

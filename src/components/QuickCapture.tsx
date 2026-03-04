@@ -27,7 +27,7 @@ export default function QuickCapture({ onCapture }: QuickCaptureProps) {
                 className={styles.input}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                placeholder="Capture something — what's on your mind?"
+                placeholder="What's on your mind?"
             />
             <button type="submit" className={styles.btn} disabled={!value.trim()}>
                 Add
